@@ -1,4 +1,5 @@
 import React from 'react';
+import './NewTaskForm.css'
 
 export default function NewTaskForm() {
     return (
