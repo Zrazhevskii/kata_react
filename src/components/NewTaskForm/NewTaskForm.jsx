@@ -3,20 +3,15 @@ import './NewTaskForm.css';
 import Valid from './Valid';
 import TaskList from '../TaskList/TaskList';
 import Footer from '../Footer/Footer';
-import Context from '../Context'
+import Context from '../Context';
 
 export default function NewTaskForm() {
     const [valueForm, setValueForm] = useState('');
-    // const [classActive, setClassActive] = useState({
-    //     all: 'selected',
-    //     itemActive: '',
-    //     itemCompleted: '',
-    // })
 
     const [tasks, setTasks] = useState([
-        { task: 'Сделать машину', active: true },
-        { task: 'Купить продукты', active: true },
-        { task: 'Помыть посуду', active: true },
+        {idTask: 1, task: 'Сделать машину', active: true },
+        {idTask: 2, task: 'Купить продукты', active: true },
+        {idTask: 3, task: 'Помыть посуду', active: true },
     ]);
 
     const handleSubmit = (evt) => {
@@ -26,15 +21,34 @@ export default function NewTaskForm() {
 
     const handleKeyDown = (evt) => {
         if (evt.key === 'Enter' && Valid(valueForm)) {
-            setTasks((prevTasks) => [...prevTasks, { task: valueForm, active: true }]);
+            const id = () => {
+                const randomNumber1 = Math.floor(Math.random() * 1000);
+                const randomNumber2 = Math.floor(Math.random() * 10000);
+                return randomNumber1 + randomNumber2;
+            };
+
+            setTasks((prevTasks) => [
+                ...prevTasks,
+                {idTask: id(), task: valueForm, active: true },
+            ]);
             setValueForm('');
         }
+    };
+
+    const clearTasksCompleted = () => {
+        setTasks(tasks.filter((item) => item.active === true));
+    };
+
+    const deletTask = (id) => {
+        setTasks(tasks.filter((item) => item.idTask !== id));
     };
 
     const value = {
         tasks,
         setTasks,
-    }
+        clearTasksCompleted,
+        deletTask,
+    };
 
     return (
         <Context.Provider value={value}>

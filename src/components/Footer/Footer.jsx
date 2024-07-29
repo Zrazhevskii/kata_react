@@ -4,8 +4,8 @@ import Context from '../Context';
 
 export default function Footer({ activeItems, completedItems, allItems }) {
     const value = useContext(Context);
-    
-    const { tasks } = value;
+
+    const { tasks, clearTasksCompleted } = value;
     let item = tasks.filter((elem) => elem.active === true).length;
 
     const [classActive, setClassActive] = useState({
@@ -62,7 +62,7 @@ export default function Footer({ activeItems, completedItems, allItems }) {
                     </button>
                 </li>
             </ul>
-            <button className='clear-completed'>Clear completed</button>
+            <button className='clear-completed' onClick={clearTasksCompleted}>Clear completed</button>
         </footer>
     );
 }
