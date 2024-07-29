@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './NewTaskForm.css';
 import Valid from './Valid';
 import TaskList from '../TaskList/TaskList';
-import Footer from '../Footer/Footer';
 import Context from '../Context';
 
 export default function NewTaskForm() {
@@ -21,6 +20,7 @@ export default function NewTaskForm() {
 
     const handleKeyDown = (evt) => {
         if (evt.key === 'Enter' && Valid(valueForm)) {
+
             const id = () => {
                 const randomNumber1 = Math.floor(Math.random() * 1000);
                 const randomNumber2 = Math.floor(Math.random() * 10000);
@@ -64,7 +64,7 @@ export default function NewTaskForm() {
                     autoFocus
                 />
             </header>
-            <TaskList data={tasks} />
+            <TaskList />
         </Context.Provider>
     );
 }

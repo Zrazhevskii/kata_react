@@ -6,7 +6,7 @@ export default function Footer({ activeItems, completedItems, allItems }) {
     const value = useContext(Context);
 
     const { tasks, clearTasksCompleted } = value;
-    let item = tasks.filter((elem) => elem.active === true).length;
+    let item = tasks.filter((elem) => elem.active).length;
 
     const [classActive, setClassActive] = useState({
         all: 'selected',

@@ -2,22 +2,18 @@ import React, { useContext } from 'react';
 import Context from '../Context';
 
 export default function Task({ item }) {
-    let {idTask, task, active } = item;
+    let { idTask, task, active } = item;
 
     const value = useContext(Context);
     let { tasks, setTasks, deletTask } = value;
 
     const toggleChecked = () => {
         setTasks(
-            tasks.map((e) => {
-                if (e === item) {
-                    e.active = !e.active;
-                }
-                return e;
-            })
+            tasks.map((e) =>
+                e === item ? { ...e, active: !e.active } : { ...e }
+            )
         );
     };
-
 
     const description = active ? '' : 'description';
 
@@ -39,7 +35,10 @@ export default function Task({ item }) {
                     </span>
                 </label>
                 <button className='icon icon-edit'></button>
-                <button className='icon icon-destroy' onClick={() => deletTask(idTask)}></button>
+                <button
+                    className='icon icon-destroy'
+                    onClick={() => deletTask(idTask)}
+                ></button>
             </div>
         </li>
     );
