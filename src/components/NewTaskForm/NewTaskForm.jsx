@@ -1,14 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './NewTaskForm.css';
 import Valid from './Valid';
 import TaskList from '../TaskList/TaskList';
-// import Context from '../Context'
+import Footer from '../Footer/Footer';
+import Context from '../Context'
 
 export default function NewTaskForm() {
     const [valueForm, setValueForm] = useState('');
+    // const [classActive, setClassActive] = useState({
+    //     all: 'selected',
+    //     itemActive: '',
+    //     itemCompleted: '',
+    // })
+
     const [tasks, setTasks] = useState([
-        { task: 'Сделать машину', },
-        { task: 'Купить продукты', },
+        { task: 'Сделать машину', active: true },
+        { task: 'Купить продукты', active: true },
+        { task: 'Помыть посуду', active: true },
     ]);
 
     const handleSubmit = (evt) => {
@@ -18,14 +26,18 @@ export default function NewTaskForm() {
 
     const handleKeyDown = (evt) => {
         if (evt.key === 'Enter' && Valid(valueForm)) {
-            // console.log('вроде все получилось');
-            setTasks((prevTasks) => [...prevTasks, {task: valueForm}])
+            setTasks((prevTasks) => [...prevTasks, { task: valueForm, active: true }]);
             setValueForm('');
         }
     };
 
+    const value = {
+        tasks,
+        setTasks,
+    }
+
     return (
-        <>
+        <Context.Provider value={value}>
             <header className='header'>
                 <h1>todos</h1>
                 <input
@@ -39,6 +51,6 @@ export default function NewTaskForm() {
                 />
             </header>
             <TaskList data={tasks} />
-        </>
+        </Context.Provider>
     );
 }

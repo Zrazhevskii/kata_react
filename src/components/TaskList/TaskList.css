@@ -92,7 +92,7 @@
 
 .todo-list li.completed label .description {
     color: #cdcdcd;
-    /* text-decoration: line-through; */
+    text-decoration: line-through;
 }
 
 .todo-list li .icon {
