@@ -7,6 +7,7 @@ import Context from '../Context';
 export default function TaskList() {
     const value = useContext(Context);
     const data = value.tasks;
+    console.log(data)
     const [newArr, setNewArr] = useState([]);
 
     useEffect(() => {

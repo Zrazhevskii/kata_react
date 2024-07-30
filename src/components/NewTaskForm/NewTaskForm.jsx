@@ -8,9 +8,9 @@ export default function NewTaskForm() {
     const [valueForm, setValueForm] = useState('');
 
     const [tasks, setTasks] = useState([
-        {idTask: 1, task: 'Сделать машину', active: true },
-        {idTask: 2, task: 'Купить продукты', active: true },
-        {idTask: 3, task: 'Помыть посуду', active: true },
+        {idTask: 1, task: 'Сделать машину', active: true, created: new Date(2023, 7, 1, 10, 28, 15) },
+        {idTask: 2, task: 'Купить продукты', active: true, created: new Date(2024, 6, 2, 18, 5, 34) },
+        {idTask: 3, task: 'Помыть посуду', active: true, created: new Date(2024, 6, 29, 13, 57, 4) },
     ]);
 
     const handleSubmit = (evt) => {
@@ -27,9 +27,11 @@ export default function NewTaskForm() {
                 return randomNumber1 + randomNumber2;
             };
 
+            const time = new Date();
+
             setTasks((prevTasks) => [
                 ...prevTasks,
-                {idTask: id(), task: valueForm, active: true },
+                {idTask: id(), task: valueForm, active: true, created: time },
             ]);
             setValueForm('');
         }
