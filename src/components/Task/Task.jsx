@@ -1,9 +1,18 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Context from '../Context';
+import { formatDistanceToNow } from 'date-fns';
 import PropTypes from 'prop-types';
 
 export default function Task({ item }) {
-    let { idTask, task, active } = item;
+    let { idTask, task, active, created } = item;
+    const [date, setDate] = useState(formatDistanceToNow(created));
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setDate(formatDistanceToNow(created));
+        }, 5000);
+        return () => clearInterval(interval);
+    }, [created]);
 
     const value = useContext(Context);
     let { tasks, setTasks, deletTask } = value;
@@ -22,17 +31,18 @@ export default function Task({ item }) {
         <li className='completed'>
             <div className='view'>
                 <input
+                    id={idTask}
                     className='toggle'
                     type='checkbox'
                     checked={!active}
-                    onChange={() => console.log('sssssss')}
+                    onChange={toggleChecked}
                 />
-                <label>
+                <label htmlFor={idTask}>
                     <span className={description} onClick={toggleChecked}>
                         {task}
                     </span>
-                    <span className='created' onClick={toggleChecked}>
-                        created 17 seconds ago
+                    <span className='created'>
+                        created {date} ago
                     </span>
                 </label>
                 <button className='icon icon-edit'></button>

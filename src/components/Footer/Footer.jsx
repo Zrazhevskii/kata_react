@@ -34,7 +34,8 @@ export default function Footer({ activeItems, completedItems, allItems }) {
         completedItems();
     };
 
-    const handleClickAll = () => {
+    const handleClickAll = (e) => {
+        console.log(e.target.textContent)
         setClassActive({
             all: 'selected',
             itemActive: '',
