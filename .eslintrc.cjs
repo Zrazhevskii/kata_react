@@ -12,51 +12,17 @@ module.exports = {
         'plugin:prettier/recommended',
     ],
     ignorePatterns: ['dist', '.eslintrc.cjs'],
-    parser: 'babel-eslint',
-    parserOptions: {
-        ecmaFeatures: {
-            jsx: true,
-        },
-        ecmaVersion: 'latest',
-        sourceType: 'module',
-    },
-    plugins: ['babel', 'react-refresh', 'react', 'import', 'jsx-a11y'],
+    parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
+    settings: { react: { version: '18.2' } },
+    plugins: ['react-refresh'],
     rules: {
-        'react/jsx-no-target-blank': 'off',
+        "react/react-in-jsx-scope": "off",
         'react-refresh/only-export-components': [
             'warn',
             { allowConstantExport: true },
         ],
-        'react/react-in-jsx-scope': 'off',
-        'react/jsx-filename-extension': [1, { extensions: ['.jsx', '.tsx'] }],
-        'react/prop-types': 0,
-        'prettier/prettier': 'error',
-        'linebreak-style': [0, 'unix'],
-        'import/order': [
-            2,
-            {
-                groups: [
-                    'builtin',
-                    'external',
-                    'internal',
-                    'parent',
-                    'sibling',
-                    'index',
-                ],
-                'newlines-between': 'always',
-            },
-        ],
-    },
-    globals: {
-        __dirname: 'readonly',
-    },
-    settings: {
-        react: { version: '18.2' },
-        'import/resolver': {
-            alias: {
-                map: [['components', './src/components']],
-                extensions: ['.ts', '.js', '.jsx', '.json'],
-            },
-        },
+        "jsx-a11y/no-autofocus": [ 2, {
+            "ignoreNonDOM": true
+        }],
     },
 };
