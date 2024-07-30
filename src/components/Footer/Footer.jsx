@@ -1,6 +1,7 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import './Footer.css';
 import Context from '../Context';
+import PropTypes from 'prop-types';
 
 export default function Footer({ activeItems, completedItems, allItems }) {
     const value = useContext(Context);
@@ -20,7 +21,7 @@ export default function Footer({ activeItems, completedItems, allItems }) {
             all: '',
             itemActive: 'selected',
             itemCompleted: '',
-        })
+        });
         activeItems();
     };
 
@@ -29,7 +30,7 @@ export default function Footer({ activeItems, completedItems, allItems }) {
             all: '',
             itemActive: '',
             itemCompleted: 'selected',
-        })
+        });
         completedItems();
     };
 
@@ -38,7 +39,7 @@ export default function Footer({ activeItems, completedItems, allItems }) {
             all: 'selected',
             itemActive: '',
             itemCompleted: '',
-        })
+        });
         allItems();
     };
 
@@ -57,12 +58,23 @@ export default function Footer({ activeItems, completedItems, allItems }) {
                     </button>
                 </li>
                 <li>
-                    <button className={itemCompleted} onClick={handleClickCompleted}>
+                    <button
+                        className={itemCompleted}
+                        onClick={handleClickCompleted}
+                    >
                         Completed
                     </button>
                 </li>
             </ul>
-            <button className='clear-completed' onClick={clearTasksCompleted}>Clear completed</button>
+            <button className='clear-completed' onClick={clearTasksCompleted}>
+                Clear completed
+            </button>
         </footer>
     );
 }
+
+Footer.propTypes = {
+    activeItems: PropTypes.func.isRequired,
+    completedItems: PropTypes.func.isRequired,
+    allItems: PropTypes.func.isRequired,
+};

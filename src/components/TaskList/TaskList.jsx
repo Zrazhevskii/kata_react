@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import './TaskList.css';
 import Footer from '../Footer/Footer';
 import Task from '../Task/Task';

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './NewTaskForm.css';
 import Valid from './Valid';
 import TaskList from '../TaskList/TaskList';

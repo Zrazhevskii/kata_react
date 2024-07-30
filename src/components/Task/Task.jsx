@@ -1,5 +1,6 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import Context from '../Context';
+import PropTypes from 'prop-types';
 
 export default function Task({ item }) {
     let { idTask, task, active } = item;
@@ -43,3 +44,11 @@ export default function Task({ item }) {
         </li>
     );
 }
+
+Task.propTypes = {
+    item: PropTypes.shape({
+        idTask: PropTypes.number.isRequired,
+        task: PropTypes.string.isRequired,
+        active: PropTypes.bool.isRequired,
+    }),
+};
