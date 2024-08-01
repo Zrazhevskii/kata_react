@@ -1,10 +1,11 @@
 import React, { useContext, useState } from 'react';
+import PropTypes from 'prop-types';
 import Context from './Context';
 import Valid from './NewTaskForm/Valid';
 
 export default function ChangeForm(props) {
-   const { changeTask } = props;
-   const { idTask, task } = props.props;
+   const { changeTask, data } = props;
+   const { idTask, task } = data;
    const value = useContext(Context);
    const { tasks, setTasks } = value;
    const [text, setText] = useState(task);
@@ -29,7 +30,16 @@ export default function ChangeForm(props) {
             value={text}
             onChange={(evt) => updateTask(evt)}
             onKeyDown={(evt) => handleChange(evt)}
-         ></input>
+         />
       </form>
    );
 }
+
+ChangeForm.propTypes = {
+   changeTask: PropTypes.func,
+   data: PropTypes.shape({
+      idTask: PropTypes.number,
+      task: PropTypes.string,
+      props: PropTypes.element,
+   }),
+};

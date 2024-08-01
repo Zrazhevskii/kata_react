@@ -2,12 +2,10 @@
 import './App.css';
 import NewTaskForm from './components/NewTaskForm/NewTaskForm';
 
-function App() {
+export default function App() {
    return (
       <section className="todoapp">
          <NewTaskForm />
       </section>
    );
 }
-
-export default App;

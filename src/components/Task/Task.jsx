@@ -34,14 +34,17 @@ export default function Task({ item }) {
       <li className={view}>
          <div className="view">
             <input id={idTask} className="toggle" type="checkbox" checked={!active} onChange={toggleChecked} />
+            {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
             <label htmlFor={idTask} onClick={toggleChecked} onKeyDown={toggleChecked}>
                <span className={description}>{task}</span>
                <span className="created">created {date} ago</span>
             </label>
+            {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
             <button type="button" className="icon icon-edit" onClick={handleChangeTask} />
+            {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
             <button type="button" className="icon icon-destroy" onClick={() => deletTask(idTask)} />
          </div>
-         {changeTask && <ChangeForm props={item} changeTask={handleChangeTask} />}
+         {changeTask && <ChangeForm data={item} changeTask={handleChangeTask} />}
       </li>
    );
 }
@@ -51,6 +54,6 @@ Task.propTypes = {
       idTask: PropTypes.number.isRequired,
       task: PropTypes.string.isRequired,
       active: PropTypes.bool.isRequired,
-      created: PropTypes.object,
+      created: PropTypes.instanceOf(Date),
    }),
 };

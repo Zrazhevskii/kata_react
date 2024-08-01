@@ -60,7 +60,7 @@ export default function NewTaskForm() {
                placeholder="What needs to be done?"
                onChange={handleSubmit}
                onKeyDown={handleKeyDown}
-               autoFocus
+               // autoFocus
             />
          </header>
          <TaskList />
