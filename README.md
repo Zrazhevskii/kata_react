@@ -1,5 +1,5 @@
 # TODO App - Tooling и развертывание приложения
-Ссылка Vercel - []()
+Ссылка Vercel - [ссылка](https://kata-react-todo-app-nine.vercel.app/)
 
 Для этого этапа вам потребуются следующие пакеты:
 - eslint
