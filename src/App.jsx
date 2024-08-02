@@ -41,16 +41,16 @@ export default function App() {
       setTasks(tasks.map((elem) => (elem.idTask === id ? { ...elem, task: text } : { ...elem })));
    };
 
-   const activeItems = () => {
-      setfilterTasks(tasks.filter((item) => item.active));
-   };
-
-   const completedItems = () => {
-      setfilterTasks(tasks.filter((item) => !item.active));
-   };
-
-   const allItems = () => {
-      setfilterTasks(tasks);
+   const updateStatus = (status) => {
+      let updateCallbuck;
+      if (status === 'Active') {
+         updateCallbuck = tasks.filter((item) => item.active);
+      } else if (status === 'Completed') {
+         updateCallbuck = tasks.filter((item) => !item.active);
+      } else {
+         updateCallbuck = tasks;
+      }
+      return setfilterTasks(updateCallbuck);
    };
 
    const toggleChecked = (item) => {
@@ -62,13 +62,7 @@ export default function App() {
          <NewTaskForm createTask={createTask} />
          <section className="main">
             <TaskList data={filterTasks} deletTask={deletTask} toggleChecked={toggleChecked} updateTask={updateTask} />
-            <Footer
-               clearTasksCompleted={clearTasksCompleted}
-               activeItems={activeItems}
-               completedItems={completedItems}
-               allItems={allItems}
-               activeCount={activeCount}
-            />
+            <Footer clearTasksCompleted={clearTasksCompleted} updateStatus={updateStatus} activeCount={activeCount} />
          </section>
       </section>
    );

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './Footer.css';
 import PropTypes from 'prop-types';
 
-export default function Footer({ activeItems, completedItems, allItems, clearTasksCompleted, activeCount }) {
+export default function Footer({ clearTasksCompleted, updateStatus, activeCount }) {
    const [classActive, setClassActive] = useState({
       all: 'selected',
       itemActive: '',
@@ -11,28 +11,27 @@ export default function Footer({ activeItems, completedItems, allItems, clearTas
    const { all, itemActive, itemCompleted } = classActive;
 
    const handleChangeStatus = (evt) => {
-      if (evt.target.textContent === 'All') {
+      const valueStatus = evt.target.textContent;
+      if (valueStatus === 'All') {
          setClassActive({
             all: 'selected',
             itemActive: '',
             itemCompleted: '',
          });
-         allItems();
-      } else if (evt.target.textContent === 'Active') {
+      } else if (valueStatus === 'Active') {
          setClassActive({
             all: '',
             itemActive: 'selected',
             itemCompleted: '',
          });
-         activeItems();
-      } else if (evt.target.textContent === 'Completed') {
+      } else if (valueStatus === 'Completed') {
          setClassActive({
             all: '',
             itemActive: '',
             itemCompleted: 'selected',
          });
-         completedItems();
       }
+      updateStatus(valueStatus);
    };
 
    return (
@@ -63,9 +62,7 @@ export default function Footer({ activeItems, completedItems, allItems, clearTas
 }
 
 Footer.propTypes = {
-   activeItems: PropTypes.func.isRequired,
-   completedItems: PropTypes.func.isRequired,
-   allItems: PropTypes.func.isRequired,
    clearTasksCompleted: PropTypes.func.isRequired,
+   updateStatus: PropTypes.func.isRequired,
    activeCount: PropTypes.number.isRequired,
 };
