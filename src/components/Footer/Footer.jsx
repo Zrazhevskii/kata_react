@@ -1,14 +1,8 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import './Footer.css';
 import PropTypes from 'prop-types';
-import Context from '../Context';
 
-export default function Footer({ activeItems, completedItems, allItems }) {
-   const value = useContext(Context);
-
-   const { tasks, clearTasksCompleted } = value;
-   const item = tasks.filter((elem) => elem.active).length;
-
+export default function Footer({ activeItems, completedItems, allItems, clearTasksCompleted, activeCount }) {
    const [classActive, setClassActive] = useState({
       all: 'selected',
       itemActive: '',
@@ -16,49 +10,47 @@ export default function Footer({ activeItems, completedItems, allItems }) {
    });
    const { all, itemActive, itemCompleted } = classActive;
 
-   const handlerClickActive = () => {
-      setClassActive({
-         all: '',
-         itemActive: 'selected',
-         itemCompleted: '',
-      });
-      activeItems();
-   };
-
-   const handleClickCompleted = () => {
-      setClassActive({
-         all: '',
-         itemActive: '',
-         itemCompleted: 'selected',
-      });
-      completedItems();
-   };
-
-   const handleClickAll = () => {
-      setClassActive({
-         all: 'selected',
-         itemActive: '',
-         itemCompleted: '',
-      });
-      allItems();
+   const handleChangeStatus = (evt) => {
+      if (evt.target.textContent === 'All') {
+         setClassActive({
+            all: 'selected',
+            itemActive: '',
+            itemCompleted: '',
+         });
+         allItems();
+      } else if (evt.target.textContent === 'Active') {
+         setClassActive({
+            all: '',
+            itemActive: 'selected',
+            itemCompleted: '',
+         });
+         activeItems();
+      } else if (evt.target.textContent === 'Completed') {
+         setClassActive({
+            all: '',
+            itemActive: '',
+            itemCompleted: 'selected',
+         });
+         completedItems();
+      }
    };
 
    return (
       <footer className="footer">
-         <span className="todo-count">{item} items left</span>
+         <span className="todo-count">{activeCount} items left</span>
          <ul className="filters">
             <li>
-               <button type="button" className={all} onClick={handleClickAll}>
+               <button type="button" className={all} onClick={(evt) => handleChangeStatus(evt)}>
                   All
                </button>
             </li>
             <li>
-               <button type="button" className={itemActive} onClick={handlerClickActive}>
+               <button type="button" className={itemActive} onClick={(evt) => handleChangeStatus(evt)}>
                   Active
                </button>
             </li>
             <li>
-               <button type="button" className={itemCompleted} onClick={handleClickCompleted}>
+               <button type="button" className={itemCompleted} onClick={(evt) => handleChangeStatus(evt)}>
                   Completed
                </button>
             </li>
@@ -74,4 +66,6 @@ Footer.propTypes = {
    activeItems: PropTypes.func.isRequired,
    completedItems: PropTypes.func.isRequired,
    allItems: PropTypes.func.isRequired,
+   clearTasksCompleted: PropTypes.func.isRequired,
+   activeCount: PropTypes.number.isRequired,
 };

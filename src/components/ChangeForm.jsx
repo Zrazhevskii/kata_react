@@ -1,42 +1,33 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Context from './Context';
-import Valid from './NewTaskForm/Valid';
 
 export default function ChangeForm(props) {
-   const { changeTask, data } = props;
+   const { updateTask, changeClassName, data } = props;
    const { idTask, task } = data;
-   const value = useContext(Context);
-   const { tasks, setTasks } = value;
    const [text, setText] = useState(task);
 
-   const updateTask = (evt) => {
+   const updateTaskForm = (evt) => {
       evt.preventDefault();
       setText(evt.target.value);
    };
 
-   const handleChange = (evt) => {
-      if (evt.key === 'Enter' && Valid(text)) {
-         setTasks(tasks.map((elem) => (elem.idTask === idTask ? { ...elem, task: text } : { ...elem })));
-         changeTask();
+   const createUpdateTask = () => {
+      if (text.trim() !== '') {
+         updateTask(idTask, text);
+         changeClassName();
       }
    };
 
    return (
-      <form>
-         <input
-            type="text"
-            className="edit"
-            value={text}
-            onChange={(evt) => updateTask(evt)}
-            onKeyDown={(evt) => handleChange(evt)}
-         />
+      <form onSubmit={createUpdateTask}>
+         <input type="text" className="edit" value={text} onChange={(evt) => updateTaskForm(evt)} required />
       </form>
    );
 }
 
 ChangeForm.propTypes = {
-   changeTask: PropTypes.func,
+   changeClassName: PropTypes.func,
+   updateTask: PropTypes.func.isRequired,
    data: PropTypes.shape({
       idTask: PropTypes.number,
       task: PropTypes.string,

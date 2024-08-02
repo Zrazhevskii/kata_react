@@ -1,38 +1,33 @@
-import { useContext, useState, useEffect } from 'react';
+// import { useState } from 'react';
 import './TaskList.css';
-import Footer from '../Footer/Footer';
+import PropTypes from 'prop-types';
 import Task from '../Task/Task';
-import Context from '../Context';
 
-export default function TaskList() {
-   const value = useContext(Context);
-   const data = value.tasks;
-   const [newArr, setNewArr] = useState([]);
-
-   useEffect(() => {
-      setNewArr(data);
-   }, [data]);
-
-   const activeItems = () => {
-      setNewArr(data.filter((item) => item.active === true));
-   };
-
-   const completedItems = () => {
-      setNewArr(data.filter((item) => item.active === false));
-   };
-
-   const allItems = () => {
-      setNewArr(data);
-   };
-
+export default function TaskList({ data, deletTask, toggleChecked, updateTask }) {
    return (
-      <section className="main">
-         <ul className="todo-list">
-            {newArr.map((item) => {
-               return <Task item={item} key={item.idTask} />;
-            })}
-         </ul>
-         <Footer activeItems={activeItems} completedItems={completedItems} allItems={allItems} />
-      </section>
+      <ul className="todo-list">
+         {data.map((item) => {
+            return (
+               <Task
+                  item={item}
+                  deletTask={deletTask}
+                  toggleChecked={toggleChecked}
+                  updateTask={updateTask}
+                  key={item.idTask}
+               />
+            );
+         })}
+      </ul>
    );
 }
+
+TaskList.propTypes = {
+   data: PropTypes.arrayOf(
+      PropTypes.shape({
+         idTask: PropTypes.number.isRequired,
+      }),
+   ),
+   deletTask: PropTypes.func.isRequired,
+   toggleChecked: PropTypes.func.isRequired,
+   updateTask: PropTypes.func.isRequired,
+};
