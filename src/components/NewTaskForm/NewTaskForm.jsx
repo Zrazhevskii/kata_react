@@ -20,7 +20,7 @@ export default function NewTaskForm({ createTask }) {
    return (
       <header className="header">
          <h1>todos</h1>
-         <form onSubmit={handleSubmit}>
+         <form onSubmit={handleSubmit} className="new-todo-form">
             <input
                className="new-todo"
                name="valueForm"
@@ -30,6 +30,8 @@ export default function NewTaskForm({ createTask }) {
                autoFocus
                required
             />
+            <input className="new-todo-form__timer" placeholder="Min" autoFocus />
+            <input className="new-todo-form__timer" placeholder="Sec" autoFocus />
          </form>
       </header>
    );
