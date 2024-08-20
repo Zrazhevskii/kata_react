@@ -1,6 +1,9 @@
 # TODO App - Tooling и развертывание приложения
 Ссылка Vercel - [ссылка](https://kata-react-todo-app-nine.vercel.app/)
 
+
+Cсылка ToDo APP Versel с таймером - [ссылка](https://kata-react-todo-juyb35epz-denis-projects-99d3106e.vercel.app/)
+
 Для этого этапа вам потребуются следующие пакеты:
 - eslint
 - eslint-config-airbnb
