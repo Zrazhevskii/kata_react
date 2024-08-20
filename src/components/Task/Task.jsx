@@ -9,7 +9,17 @@ export default function Task({ item, deletTask, toggleChecked, updateTask, start
    const [changeClass, setChangeClass] = useState(false);
    const [booleanTimer, setBooleanTimer] = useState(false);
    const intervalTime = useRef(null);
-   // const [buttonClass, setbuttonClass] = useState('icon icon-play');
+   const [countDownTimer, setCountDownTimer] = useState({
+      minTimer: '',
+      secTimer: '',
+   });
+
+   useEffect(() => {
+      setCountDownTimer({
+         minTimer: min,
+         secTimer: sec,
+      });
+   }, []);
 
    useEffect(() => {
       const interval = setInterval(() => {
@@ -30,29 +40,54 @@ export default function Task({ item, deletTask, toggleChecked, updateTask, start
       if (min === 0 && sec === 0) return;
       if (!booleanTimer) {
          intervalTime.current = setInterval(() => {
-            startCountDownTimer(idTask);
+            setCountDownTimer((prev) => {
+               const { minTimer, secTimer } = prev;
+               if (secTimer === 0) {
+                  return {
+                     minTimer: minTimer - 1,
+                     secTimer: 59,
+                  };
+               }
+               return {
+                  ...prev,
+                  secTimer: secTimer - 1,
+               };
+            });
          }, 1000);
       }
       setBooleanTimer(true);
    };
 
    const toggleActive = () => {
-      clearInterval(intervalTime.current);
+      if (intervalTime.current) clearInterval(intervalTime.current);
+      if (active) {
+         setCountDownTimer({
+            minTimer: 0,
+            secTimer: 0,
+         });
+      }
+
       setBooleanTimer(false);
       toggleChecked(item);
    };
 
    const stopTimer = () => {
+      startCountDownTimer(idTask, countDownTimer.minTimer, countDownTimer.secTimer);
       clearInterval(intervalTime.current);
       setBooleanTimer(false);
    };
 
    useEffect(() => {
-      if (min === 0 && sec === 0) {
+      const { minTimer, secTimer } = countDownTimer;
+      if (minTimer === 0 && secTimer === 0) {
          clearInterval(intervalTime.current);
-         // console.log('закончили упражнение');
       }
-   }, [min, sec]);
+   }, [countDownTimer]);
+
+   const deletItemTask = () => {
+      if (intervalTime.current) clearInterval(intervalTime.current);
+      deletTask(idTask);
+   };
 
    return (
       <li className={view}>
@@ -63,17 +98,12 @@ export default function Task({ item, deletTask, toggleChecked, updateTask, start
                <span className="descrip">
                   <button type="button" aria-label="Edit task" className="icon icon-play" onClick={startPauseTimer} />
                   <button type="button" aria-label="Edit task" className="icon icon-pause" onClick={stopTimer} />
-                  {min}:{sec}
+                  {countDownTimer.minTimer}:{countDownTimer.secTimer}
                </span>
                <span className="created">created {date} ago</span>
             </label>
             <button type="button" aria-label="Edit task" className="icon icon-edit" onClick={handleChangeClass} />
-            <button
-               type="button"
-               aria-label="Delete task"
-               className="icon icon-destroy"
-               onClick={() => deletTask(idTask)}
-            />
+            <button type="button" aria-label="Delete task" className="icon icon-destroy" onClick={deletItemTask} />
          </div>
          {changeClass && <ChangeForm updateTask={updateTask} changeClassName={handleChangeClass} data={item} />}
       </li>
@@ -93,5 +123,4 @@ Task.propTypes = {
    deletTask: PropTypes.func.isRequired,
    toggleChecked: PropTypes.func.isRequired,
    startCountDownTimer: PropTypes.func.isRequired,
-   // stopCountDownTimer: PropTypes.func.isRequired,
 };

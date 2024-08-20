@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import './NewTaskForm.css';
 
 export default function NewTaskForm({ createTask }) {
-   // console.log(createTask);
    const [valueForm, setValueForm] = useState('');
    const [time, setTime] = useState({
       min: '',
@@ -14,7 +13,6 @@ export default function NewTaskForm({ createTask }) {
 
    const handleChangeForm = (evt) => {
       const { name, value } = evt.target;
-      // if (Number.isNaN(Number(value)) && (name === 'min' || name === 'sec')) return;
       setTime((prev) => ({ ...prev, [name]: value }));
    };
 
@@ -53,6 +51,9 @@ export default function NewTaskForm({ createTask }) {
             <input
                className="new-todo-form__timer"
                placeholder="Min"
+               type="number"
+               min="0"
+               max="59"
                autoFocus
                name="min"
                value={min}
@@ -62,6 +63,9 @@ export default function NewTaskForm({ createTask }) {
             <input
                className="new-todo-form__timer"
                placeholder="Sec"
+               type="number"
+               min="0"
+               max="59"
                autoFocus
                name="sec"
                value={sec}

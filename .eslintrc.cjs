@@ -16,6 +16,7 @@ module.exports = {
    settings: { react: { version: '18.2' } },
    plugins: ['react-refresh', 'react', 'import', 'jsx-a11y'],
    rules: {
+      'react-hooks/exhaustive-deps': 'off', 
       'react/react-in-jsx-scope': 'off',
       'import/extensions': [
          'error',
@@ -27,7 +28,7 @@ module.exports = {
       ],
       'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
-      'jsx-a11y/no-autofocus': "off",
+      'jsx-a11y/no-autofocus': 'off',
       'no-alert': 'off',
       'react/require-default-props': 0,
    },

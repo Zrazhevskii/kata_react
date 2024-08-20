@@ -6,8 +6,8 @@ import Footer from './components/Footer/Footer';
 
 export default function App() {
    const [tasks, setTasks] = useState([
-      { idTask: 1, task: 'Сделать машину', active: true, created: new Date(2023, 7, 1, 10, 28, 15), min: 10, sec: 45 },
-      { idTask: 2, task: 'Купить подарок', active: true, created: new Date(2024, 6, 2, 18, 5, 34), min: 12, sec: 10 },
+      { idTask: 1, task: 'Сделать машину', active: true, created: new Date(2024, 8, 1, 10, 28, 15), min: 10, sec: 45 },
+      { idTask: 2, task: 'Купить подарок', active: true, created: new Date(2024, 8, 2, 18, 5, 34), min: 12, sec: 10 },
    ]);
 
    const activeCount = tasks.filter((elem) => elem.active).length;
@@ -67,15 +67,9 @@ export default function App() {
       setTasks(tasks.map((elem) => (elem === item ? { ...elem, active: !elem.active, min: 0, sec: 0 } : { ...elem })));
    };
 
-   const startCountDownTimer = (id) => {
+   const startCountDownTimer = (id, minTimer, secTimer) => {
       setTasks((prev) => {
-         const task = prev.filter((elem) => elem.idTask === id);
-         const { sec } = task[0];
-
-         if (sec === 0) {
-            return prev.map((elem) => (elem.idTask === id ? { ...elem, min: elem.min - 1, sec: 59 } : { ...elem }));
-         }
-         return prev.map((elem) => (elem.idTask === id ? { ...elem, sec: elem.sec - 1 } : { ...elem }));
+         return prev.map((elem) => (elem.idTask === id ? { ...elem, min: minTimer, sec: secTimer } : { ...elem }));
       });
    };
 
