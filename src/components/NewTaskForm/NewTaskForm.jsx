@@ -3,7 +3,20 @@ import PropTypes from 'prop-types';
 import './NewTaskForm.css';
 
 export default function NewTaskForm({ createTask }) {
+   // console.log(createTask);
    const [valueForm, setValueForm] = useState('');
+   const [time, setTime] = useState({
+      min: '',
+      sec: '',
+   });
+
+   const { min, sec } = time;
+
+   const handleChangeForm = (evt) => {
+      const { name, value } = evt.target;
+      // if (Number.isNaN(Number(value)) && (name === 'min' || name === 'sec')) return;
+      setTime((prev) => ({ ...prev, [name]: value }));
+   };
 
    const handleChange = (evt) => {
       setValueForm(evt.target.value);
@@ -11,27 +24,50 @@ export default function NewTaskForm({ createTask }) {
 
    const handleSubmit = (evt) => {
       evt.preventDefault();
+
       if (valueForm.trim() !== '') {
-         createTask(valueForm);
+         createTask(valueForm, time);
          setValueForm('');
+         setTime({
+            min: '',
+            sec: '',
+         });
       }
    };
 
    return (
       <header className="header">
          <h1>todos</h1>
-         <form onSubmit={handleSubmit} className="new-todo-form">
+         <form onSubmit={(evt) => handleSubmit(evt)} className="new-todo-form">
+            <button type="submit" hidden aria-hidden />
             <input
                className="new-todo"
+               type="text"
                name="valueForm"
                value={valueForm}
                placeholder="What needs to be done?"
-               onChange={handleChange}
+               onChange={(evt) => handleChange(evt)}
                autoFocus
                required
             />
-            <input className="new-todo-form__timer" placeholder="Min" autoFocus />
-            <input className="new-todo-form__timer" placeholder="Sec" autoFocus />
+            <input
+               className="new-todo-form__timer"
+               placeholder="Min"
+               autoFocus
+               name="min"
+               value={min}
+               onChange={(evt) => handleChangeForm(evt)}
+               required
+            />
+            <input
+               className="new-todo-form__timer"
+               placeholder="Sec"
+               autoFocus
+               name="sec"
+               value={sec}
+               onChange={(evt) => handleChangeForm(evt)}
+               required
+            />
          </form>
       </header>
    );
